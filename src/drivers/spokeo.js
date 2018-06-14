@@ -12,8 +12,9 @@ module.exports = function SpokeoDriver(OptOut, Nightmare){
   driver.selectors.searchFormLastName = driver.selectors.searchFormFirstName;
   driver.selectors.searchFormButton = `#search`;
   driver.selectors.waitAfterSearch = ".listview_header_section_title";
-  driver.selectors.eachProfileOnSearchPage = `div a.listview_section`;
+  driver.selectors.eachProfileOnSearchPage = `.listview_section`;
   driver.selectors.eachProfileSynopsisLocation = '.current_location_row';
+  driver.selectors.testFunc = function(){};
 
   driver.locateProfiles = function(person, session, callback){
     OptOut.searchPagesWithJavascript(person, driver, session, function(result){

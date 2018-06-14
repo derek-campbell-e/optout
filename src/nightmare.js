@@ -1,5 +1,5 @@
 module.exports = function Nightmare(OptOut){
   const Nightmare = require('nightmare');
-  const nightmare = Nightmare({show: true, width: 1200, height: 900});
+  const nightmare = Nightmare({show: true, width: 1920, height: 1080});
   return nightmare;
 };
