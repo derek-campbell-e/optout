@@ -1,6 +1,6 @@
 module.exports = function OptOut(){
   let oo = {};
-  let nightmare = require('./nightmare')(oo);
+  let nightmare = require('../nightmare')(oo);
   oo.drivers = {};
   oo.profiles = {};
 
@@ -10,10 +10,9 @@ module.exports = function OptOut(){
     })
     .then(function(hasJQuery){
       if(hasJQuery){
-        console.log("HAS JQUERY!!!");
         return callback(session);
       }
-      session.inject('js', require('path').join(__dirname, '..', 'node_modules', 'jquery/dist/jquery.js'))
+      session.inject('js', require('path').join(__dirname, '../..', 'node_modules', 'jquery/dist/jquery.js'))
       .wait()
       .evaluate(function(){})
       .then(function(){
@@ -22,11 +21,23 @@ module.exports = function OptOut(){
     });
   };
 
+  oo.nextSearchPage = function(person, driver, session, callback){
+    session
+      .click(driver.selectors.nextSearchPage)
+      .wait(1000)
+      .wait(driver.selectors.waitAfterSearch)
+      .evaluate(function(){})
+      .then(function(){
+        console.log("NEXT PAGE");
+        oo.searchPagesWithJavascript(person, driver, session, callback);
+      });
+  };
+
   oo.searchPagesWithJavascript = function(person, driver, session, callback){
     oo.injectJQuery(session, function(){
       session
       .wait(1000)
-      .evaluate(function(selectors, regex){
+      .evaluate(function(selectors, person){
         let profileDOMs = $(selectors.eachProfileOnSearchPage);
         let profiles = [];
         let profileScrape = function(dom){
@@ -40,18 +51,45 @@ module.exports = function OptOut(){
           let text = "";
           dom.children().each(function(i, e){
             text += $(e).text();
-            text += " ";
+            text += "\n";
           });
           profile.text = text;
+          profile.link = "aaaaa";
+          
+          if(selectors.eachProfileOnSearchPage === selectors.eachProfileLink){
+            profile.link = dom.attr('href');
+          } else {
+            profile.link = dom.find(selectors.eachProfileLink).attr('href');
+          }
+          
+          var willContinue = false;
+          for(_location of person.locations){
+            if(profile.text.indexOf(_location) !== -1){
+              willContinue = true;
+            }
+            if(profile.text.indexOf(_location.split(",")[0]) !== -1){
+              willContinue = true;
+            }
+          }
+          if(!willContinue){
+            return null;
+          }
           return profile;
         };
         profileDOMs.each(function(i, e){
-          profiles.push(profileScrape($(e)));
+          let result = profileScrape($(e));
+          if(result){
+            profiles.push(result);
+          }
         });
-        return {needsNavigation: true, profiles: profiles, selectors: selectors};
-      }, driver.selectors, driver.regex)
+        let needsNavigation = profiles.length < 1;
+        return {needsNavigation: needsNavigation, profiles: profiles};
+      }, driver.selectors, person)
       .then(function(result){
-        console.log(result.profiles);
+        if(result.needsNavigation){
+          return oo.nextSearchPage(person, driver, session, callback);
+        }
+        console.log(result);
         callback({result: result, profiles: []});
       });
     });
@@ -64,7 +102,7 @@ module.exports = function OptOut(){
   oo.loadDrivers = function(){
     const fs = require('fs');
     const path = require('path');
-    let dir = path.join(__dirname, 'drivers');
+    let dir = path.join(__dirname, '..', 'drivers');
     let files = fs.readdirSync(dir);
     let drivers = files.filter(function(item){
       let ext = path.extname(item);
@@ -94,7 +132,11 @@ module.exports = function OptOut(){
       let driver = oo.drivers[driverKey];
       let scope = {};
       scope.driver = driverKey;
-      driver.routine.call(scope, person, loop);
+      if(!driver.enabled){
+        return loop();
+      }
+      let routine = require('./routine')(oo, nightmare, driver, loop);
+     routine.run.call(scope, person);
     };
     loop();
   };
@@ -103,7 +145,9 @@ module.exports = function OptOut(){
     oo.loadDrivers();
     oo.routine({
       firstName: 'Beth',
-      lastName: 'Campbell'
+      lastName: 'Campbell',
+      age: 58,
+      locations: ['Riverside, CA', 'Lake Elsinore, CA']
     });
     return oo;
   };
