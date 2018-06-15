@@ -149,3 +149,21 @@
 - optout search: true
 - optout requires email confirmation: true
 - removal captcha: true
+
+## idtrue
+- has state filter: true
+- optout search: true
+- optout requires email confirmation: true
+- get search url: https://www.idtrue.com/optout/results.php?first=[first]&last=[last]&state=[State]&check=
+- possible auto-optout with url: https://www.idtrue.com/optout/confirm.php?id=[profileid]
+
+## infotracer
+- fake search loading: true
+- MANUAL OPT-OUT: true
+- optout requires personal information: true
+- optout requires state id/license: true
+
+## peoplelookup
+- MANUAL OPT-OUT: true
+- optout requires personal information: true
+- optout requires state id/license: true
