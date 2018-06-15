@@ -86,7 +86,7 @@ module.exports = function OptOut(){
         return {needsNavigation: needsNavigation, profiles: profiles};
       }, driver.selectors, person)
       .then(function(result){
-        if(result.needsNavigation){
+        if(result.needsNavigation && driver.selectors.nextSearchPage){
           return oo.nextSearchPage(person, driver, session, callback);
         }
         console.log(result);
@@ -144,8 +144,8 @@ module.exports = function OptOut(){
   let init = function(){
     oo.loadDrivers();
     oo.routine({
-      firstName: 'Beth',
-      lastName: 'Campbell',
+      firstName: ' ',
+      lastName: ' ',
       age: 58,
       locations: ['Riverside, CA', 'Lake Elsinore, CA']
     });
