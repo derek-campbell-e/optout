@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>OptOut Bot Landing</title>
+    <style>
+      .basic-info {
+        background-color: #191d27;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .more-info {
+        background-color: #2e3340;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .profile-picker {
+        background-color: #5e85e3;
+      }
+      .profile-info {
+        background-color: #e6e9f2;
+        
+      }
+      .profile-info.hide {
+        width: 0%;
+        flex: 0;
+        padding: 0;
+      }
+
+      .basic-info,.more-info, .profile-picker,.profile-info {
+        height: 100vh;
+      }
+      .title {
+        color: #fff;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      label {
+        color: #fff;
+      }
+      .overflow-if-needed {
+        height: 100%;
+        overflow: auto;
+      }
+      
+      .overflow-if-needed .holder {
+        padding-bottom: 40px;
+      }
+
+      body, html {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+    <div class='container-fluid'>
+      <div class='row'>
+
+        <div class='col-2 profile-picker'>
+          <h1 class='title'>Profiles...</h1>
+        </div>
+
+        <div class='col-2 profile-info hide'>
+            <h1 class='title'>Profiles...</h1>
+          </div>
+
+
+
+        <div class='col basic-info'>
+          <div class='row'>
+            <div class='col'>
+              <h1 class='title'>Basic Info<br><small>
+                  Of person to be opted out
+                </small></h1>
+            </div>
+          </div>
+          
+          <!-- form group setup -->
+          <div class='row justify-content-md-center overflow-if-needed'>
+            <div class='col-sm-8 holder'>
+              <!-- form group item -->
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="First Name">
+              </div>
+              <!--/form group item-->
+
+               <!-- form group item -->
+               <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+                </div>
+                <!--/form group item-->
+
+                <!-- form group item -->
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  <small id="emailHelp" class="form-text text-muted">Create/Enter a DISPOSABLE email address. One you can delete if you get spammed</small>
+                </div>
+                <!--/form group item-->
+
+                <!-- form group item -->
+                <div class="form-group">
+                  <label for="age">Age</label>
+                  <input type="text" class="form-control" id="age" placeholder="Age">
+                </div>
+                <!--/form group item-->
+
+                <!-- form group item -->
+                <div class="form-group">
+                  <label for="knownLocations">Known Locations</label>
+                  <textarea class="form-control" id="knownLocations" aria-describedby="locationHelp" placeholder="City, State OR State"></textarea>
+                  <small id="locationHelp" class="form-text text-muted">Separate each location with a new line</small>
+                </div>
+                <!--/form group item-->
+
+                <!-- form group item -->
+                <div class="form-group">
+                  <label for="relatives">Relatives</label>
+                  <textarea class="form-control" id="relatives" aria-describedby="relativesHelp" placeholder="First Last"></textarea>
+                  <small id="relativesHelp" class="form-text text-muted">Separate each relative with a new line</small>
+                </div>
+                <!--/form group item-->
+
+
+                <!-- form group item -->
+                <div class="form-group">
+                    <label for="licensePhoto">Photo Of License</label>
+                    <input type="file" class="btn btn-primary" id="licensePhoto" aria-describedby="licenseHelp">
+                    <small id="licenseHelp" class="form-text text-muted">Some broker sites require a photo of your state issued license / ID to be removed</small>
+                  </div>
+                  <!--/form group item-->
+
+            </div>
+          </div>
+          <!--/form group setup-->
+          <div class='row'>
+            <div class='col'>
+              <button class='btn btn-primary btn-lg'>START</button>
+            </div>
+          </div>
+
+        </div>
+        <div class='col more-info'>
+          <div class='row'>
+              <div class='col'>
+                <h1 class='title'>Progress / Updates</h1>
+              </div>
+            </div>
+            
+            <!-- form group setup -->
+            <div class='row justify-content-md-center overflow-if-needed'>
+              <div class='col-sm-8'>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </form>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
