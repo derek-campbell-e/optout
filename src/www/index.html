@@ -136,11 +136,11 @@
 
                 <!-- form group item -->
                 <div class="form-group">
-                    <label for="licensePhoto">Photo Of License</label>
-                    <input type="file" class="btn btn-primary" id="licensePhoto" name="licensePhoto" aria-describedby="licenseHelp">
-                    <small id="licenseHelp" class="form-text text-muted">Some broker sites require a photo of your state issued license / ID to be removed</small>
-                  </div>
-                  <!--/form group item-->
+                  <label for="licensePhoto">Photo Of License</label>
+                  <input type="file" class="btn btn-primary" id="licensePhoto" name="licensePhoto" aria-describedby="licenseHelp">
+                  <small id="licenseHelp" class="form-text text-muted">Some broker sites require a photo of your state issued license / ID to be removed</small>
+                </div>
+                <!--/form group item-->
 
             </div>
           </div>
@@ -148,7 +148,7 @@
           
 
         </div>
-        <div class='col more-info'>
+        <div class='col-2 more-info'>
           <div class='row'>
               <div class='col'>
                 <h1 class='title'>Progress / Updates</h1>
@@ -169,13 +169,15 @@
   </form>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
-      const ipc = require('electron').ipcRenderer;
+      //const ipc = require('electron').ipcRenderer;
+      let userOptions = false;
       $(document).on('click', '#actionButton', function(){
-        ipc.send('ready', $("form").serializeArray());
+        //ipc.send('ready', $("form").serializeArray());
+        userOptions = $("form").serializeArray();
         return false;
       });
     </script>

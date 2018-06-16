@@ -1,4 +1,12 @@
 module.exports = function OptOut(options){
+  const path = require('path');
+  const www = path.join(__dirname, '..', 'www');
+  const express = require('express');
+  const app = express();
+  
+  app.use('/', express.static(www));
+  
+
   let oo = {};
   let nightmare = require('../nightmare')(oo);
   oo.drivers = {};
@@ -142,7 +150,7 @@ module.exports = function OptOut(options){
     loop();
   };
 
-  oo.formatOptions = function(){
+  oo.formatOptions = function(options){
     let json = {};
     console.log(options);
     for(object of options){
@@ -157,9 +165,24 @@ module.exports = function OptOut(options){
     return json;
   };
 
+  oo.loadIndex = function(){
+    app.listen(8080, function(){
+      console.log("LISTENING");
+      let session = nightmare.goto('http://localhost:8080').wait(function(){
+        return userOptions;
+      }).evaluate(function(){
+        return userOptions;
+      }).then(function(options){
+        console.log(options);
+        oo.routine(oo.formatOptions(options))
+      });
+    });
+  };
+
   let init = function(){
     oo.loadDrivers();
-    oo.routine(oo.formatOptions());
+    oo.loadIndex();
+    //oo.routine(oo.formatOptions());
     return oo;
   };
 
