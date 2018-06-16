@@ -15,6 +15,7 @@ module.exports = function Routine(OptOut, Nightmare, Driver, Callback){
       session
         .evaluate(function(){})
         .then(function(){
+          console.log("DISCOVER");
           routine.locateProfiles(person, session)
         })
       return;

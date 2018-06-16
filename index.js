@@ -1,1 +1,4 @@
-module.exports = require('./src/optout')();
+module.exports = require('./src/optout');
+process.on('message', function(data){
+  module.exports(data);
+});

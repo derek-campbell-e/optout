@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js"
+    "test": "nodemon index.js",
+    "gui": "nodemon --exec \"electron gui.js\" --ignore window.json"
   },
   "author": "",
   "license": "ISC",

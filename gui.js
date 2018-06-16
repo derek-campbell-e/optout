@@ -1,13 +1,27 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
+const ipc = require('electron').ipcMain;
+const OptOut = require('./index');
+const fork = require('child_process').fork;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
+
+let dim = {};
 let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  let dimensions = {x: 0, y: 0, width: 1200, height: 800};
+  try {
+    dim = require('./window.json');
+    dimensions = dim.gui;
+    console.log(dimensions);
+  } catch (error){
+    console.log(error);
+  }
+
+  mainWindow = new BrowserWindow(dimensions)
 
   // and load the index.html of the app.
   const path = require('path');
@@ -25,6 +39,22 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+  mainWindow.on('move', updateDimensions)
+  mainWindow.on('resize', updateDimensions)
+
+  ipc.on('ready', function(event, args){
+    //let child = fork('./index');
+    //child.send(args);
+    OptOut(args);
+  });
+}
+
+function updateDimensions(){
+  let _dim = mainWindow.getBounds();
+  let saveDim = {x: _dim.x, y: _dim.y, width: _dim.width, height: _dim.height};
+  dim.gui = saveDim
+  let json = JSON.stringify(dim);
+  require('fs').writeFile('window.json', json, console.log);
 }
 
 // This method will be called when Electron has finished

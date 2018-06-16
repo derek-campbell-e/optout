@@ -1,4 +1,4 @@
-module.exports = function OptOut(){
+module.exports = function OptOut(options){
   let oo = {};
   let nightmare = require('../nightmare')(oo);
   oo.drivers = {};
@@ -123,6 +123,7 @@ module.exports = function OptOut(){
   
   oo.routine = function(person){
     let driverKeys = Object.keys(oo.drivers);
+    console.log(driverKeys);
     let loop = function(){
       let driverKey = driverKeys.shift();
       if(typeof driverKey === "undefined"){
@@ -141,14 +142,24 @@ module.exports = function OptOut(){
     loop();
   };
 
+  oo.formatOptions = function(){
+    let json = {};
+    console.log(options);
+    for(object of options){
+      let key = object.name;
+      json[object.name] = object.value;
+      if(key === 'locations' || key === 'relatives'){
+        let value = object.value;
+        value = value.split("\n");
+        json[key] = value;
+      }
+    }
+    return json;
+  };
+
   let init = function(){
     oo.loadDrivers();
-    oo.routine({
-      firstName: ' ',
-      lastName: ' ',
-      age: 58,
-      locations: ['Riverside, CA', 'Lake Elsinore, CA']
-    });
+    oo.routine(oo.formatOptions());
     return oo;
   };
 
