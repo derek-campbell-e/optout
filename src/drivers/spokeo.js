@@ -3,7 +3,7 @@ module.exports = function SpokeoDriver(OptOut, Nightmare){
 
   driver.options = {};
   driver.options.captcha = true;
-  driver.enabled = true;
+  driver.enabled = false;
 
   driver.urls = {};
   driver.urls.searchPage = "https://www.spokeo.com";

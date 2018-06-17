@@ -1,0 +1,1 @@
+window.stringSimilarty = require('string-similarity');

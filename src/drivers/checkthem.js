@@ -1,10 +1,11 @@
 module.exports = function SpokeoDriver(OptOut, Nightmare){
   let driver = {};
 
-  driver.enabled = false;
+  driver.enabled = true;
   driver.options = {};
   driver.options.captcha = true;
   driver.options.hasGETSearchURL = true;
+  driver.options.fakeSearchPage = true;
 
   driver.urls = {};
   driver.urls.searchPage = "www.checkthem.com/";
@@ -19,11 +20,22 @@ module.exports = function SpokeoDriver(OptOut, Nightmare){
   driver.selectors.searchFormButton = `#search`;
   driver.selectors.waitAfterSearch = ".results-table";
   driver.selectors.eachProfileOnSearchPage = `#resultRows .mobile-results-rows`;
-  //driver.selectors.eachProfileSynopsisLocation = '.current_location_row';
+  driver.selectors.eachProfileSynopsisLocation = 'td:nth-child(3)';
   //driver.selectors.nextSearchPage = '.pagination .pagination_item:last-child';
   //driver.selectors.eachProfileLink = '.listview_section'
   driver.selectors.alternate = {};
   driver.selectors.alternate.eachProfileOnSearchPage = '.listview_section';
+
+  driver.funcs = {};
+  driver.funcs.eachProfileSynopsisLocation = {};
+  driver.funcs.eachProfileSynopsisLocation.args = ['profileDom'];
+  driver.funcs.eachProfileSynopsisLocation.func = `
+    var locs = [];
+    profileDom.find(".different-line").each(function(i,e){
+      locs.push($(e).text());
+    });
+    return locs;
+  `;
   
 
   return driver;

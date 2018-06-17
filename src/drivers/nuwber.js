@@ -1,7 +1,7 @@
 module.exports = function SpokeoDriver(OptOut, Nightmare){
   let driver = {};
 
-  driver.enabled = false;
+  driver.enabled = true;
   driver.options = {};
   driver.options.captcha = true;
   driver.options.hasGETSearchURL = true;
@@ -19,9 +19,10 @@ module.exports = function SpokeoDriver(OptOut, Nightmare){
   driver.selectors.searchFormButton = `#w0 [type='submit']`;
   driver.selectors.waitAfterSearch = ".search-results";
   driver.selectors.eachProfileOnSearchPage = `.search-item`;
+  driver.selectors.notEachProfileOnSearchPage = '.search-ad';
   driver.selectors.eachProfileSynopsisLocation = '.addr';
   driver.selectors.nextSearchPage = '.pagination .next';
-  driver.selectors.eachProfileLink = 'h2 a'
+  driver.selectors.eachProfileLink = 'h2 a';
   driver.selectors.alternate = {};
   driver.selectors.alternate.eachProfileOnSearchPage = '.listview_section';
   

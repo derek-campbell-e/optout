@@ -3,6 +3,12 @@ module.exports = function Routine(OptOut, Nightmare, Driver, Callback){
   let error = null;
 
   routine.run = function(person){
+    let fullName = OptOut.fullName(person);
+    OptOut.profiles[fullName] = OptOut.profiles[fullName] || {};
+    OptOut.profiles[fullName].sites = OptOut.profiles[fullName].sites || {};
+    OptOut.profiles[fullName].information = OptOut.profiles[fullName].information || {};
+    let profile = OptOut.profiles[fullName];
+    profile.information = person;
     routine.discover(person);
   };
 
@@ -39,11 +45,15 @@ module.exports = function Routine(OptOut, Nightmare, Driver, Callback){
 
   routine.locateProfiles = function(person, session){
     OptOut.searchPagesWithJavascript(person, Driver, session, function(result){
-      routine.saveProfiles(result);
+      routine.saveProfiles(person, result.profiles);
     });
   };
 
-  routine.saveProfiles = function(profiles){
+  routine.saveProfiles = function(person, profiles){
+    console.log("GOT OUR PROFILES", profiles);
+    let personProfile = OptOut.profiles[OptOut.fullName(person)];
+    personProfile.sites[Driver.name] = profiles;
+    OptOut.saveProfiles();
     routine.decideAutoOptOut(Driver, profiles, function(optResults){
       Callback(error, optResults);
     });

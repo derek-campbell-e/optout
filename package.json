@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js",
+    "test": "nodemon index.js --ignore profiles.json",
     "gui": "nodemon --exec \"electron gui.js\" --ignore window.json"
   },
   "author": "",
@@ -13,6 +13,7 @@
     "electron": "^2.0.2",
     "express": "^4.16.3",
     "jquery": "^3.3.1",
-    "nightmare": "^3.0.1"
+    "nightmare": "^3.0.1",
+    "string-similarity": "^1.2.0"
   }
 }
