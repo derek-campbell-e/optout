@@ -1,10 +1,11 @@
 module.exports = function SpokeoDriver(OptOut, Nightmare){
   let driver = {};
 
-  driver.enabled = true;
+  driver.enabled = false;
   driver.options = {};
   driver.options.captcha = true;
   driver.options.hasGETSearchURL = true;
+  driver.options.needsSearchStopper = true;
 
   driver.urls = {};
   driver.urls.searchPage = "https://www.nuwber.com";
@@ -21,10 +22,17 @@ module.exports = function SpokeoDriver(OptOut, Nightmare){
   driver.selectors.eachProfileOnSearchPage = `.search-item`;
   driver.selectors.notEachProfileOnSearchPage = '.search-ad';
   driver.selectors.eachProfileSynopsisLocation = '.addr';
-  driver.selectors.nextSearchPage = '.pagination .next';
+  driver.selectors.nextSearchPage = '.pagination .next a';
   driver.selectors.eachProfileLink = 'h2 a';
   driver.selectors.alternate = {};
   driver.selectors.alternate.eachProfileOnSearchPage = '.listview_section';
+
+  driver.funcs = {};
+  driver.funcs.stopSearching = {};
+  driver.funcs.stopSearching.args = ['profileDom'];
+  driver.funcs.stopSearching.func = `
+    
+  `;
   
 
   return driver;

@@ -1,4 +1,4 @@
-module.exports = function CheckThemDriver(OptOut, Nightmare){
+module.exports = function ThatsThemDriver(OptOut, Nightmare){
   let driver = {};
 
   driver.enabled = true;
@@ -10,7 +10,7 @@ module.exports = function CheckThemDriver(OptOut, Nightmare){
   driver.urls = {};
   driver.urls.searchPage = "www.checkthem.com/";
   driver.urls.getSearchURL = function(person){
-    return `https://www.checkthem.com/app/search-results-v3?firstname=${person.firstName}&lastname=${person.lastName}&state=00`;
+    return `https://thatsthem.com/name/${person.firstName}-${person.lastName}`;
   };
 
   driver.selectors = {};
@@ -18,28 +18,23 @@ module.exports = function CheckThemDriver(OptOut, Nightmare){
   driver.selectors.searchFormFirstName = `.homepage_hero_search_box [name='q']`;
   driver.selectors.searchFormLastName = driver.selectors.searchFormFirstName;
   driver.selectors.searchFormButton = `#search`;
-  driver.selectors.waitAfterSearch = ".results-table";
-  driver.selectors.eachProfileOnSearchPage = `#resultRows .mobile-results-rows`;
-  driver.selectors.eachProfileSynopsisLocation = 'td:nth-child(3)';
-  driver.selectors.eachProfileSynopsisAge = '.age strong';
-  //driver.selectors.nextSearchPage = '.pagination .pagination_item:last-child';
-  driver.selectors.alternate = {};
-  driver.selectors.alternate.eachProfileOnSearchPage = '.listview_section';
+  driver.selectors.waitAfterSearch = ".ThatsThem-records";
+  driver.selectors.eachProfileOnSearchPage = `.ThatsThem-record`;
+  driver.selectors.eachProfileSynopsisLocation = '.ThatsThem-record-address';
+  driver.selectors.eachProfileSynopsisAge = '.ThatsThem-record-age .active';
+  
 
   driver.funcs = {};
 
+  
   OptOut.functionCreator(driver.funcs, 'eachProfileLocation', ['profileDom'], 'location',`
-    let link = profileDom.find("a").attr('onclick');
-    let index = link.replace(/\\D/g, "");
-    let result = $scope.results[index];
-    let locations = result.addresses;
-    let _locations = [];
-    for(let loc of locations){
-      _locations.push(loc.city + ", " + loc.state);
-    }
-    return _locations;
+    let loc = [];
+    let addrDom = profileDom.find('.ThatsThem-record-address');
+    loc.push(addrDom.find("[itemprop='addressLocality']").text() + "," + addrDom.find("[itemprop='addressRegion']").text());
+    return loc;
   `);
-
+  
+  /*
   OptOut.functionCreator(driver.funcs, 'eachProfileID', ['profileDom'], 'id', `
     let link = profileDom.find("a").attr('onclick');
     let index = link.replace(/\\D/g, "");
@@ -54,6 +49,7 @@ module.exports = function CheckThemDriver(OptOut, Nightmare){
     let result = $scope.results[index];
     return result
   `);
+  */
 
 
   
